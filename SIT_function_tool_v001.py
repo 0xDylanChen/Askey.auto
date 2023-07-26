@@ -1,38 +1,25 @@
 #GUI
-2005-10-2102923-1
 import tkinter as tk
-
 #sysoutput
 import os
-
 #path
 import sys
-
 #sftp 
 import paramiko
-
 #checksum
 import zlib
 import binascii
-
 #hash256
 import hashlib
-
 #process
 import subprocess
-
 # threading
 import threading
-
 #time
 import datetime
 import time 
 
-#Function test C3
-#import functionTest_com as function
-#import serial.tools.list_ports
-
-# 取得當前目錄
+# get current path
 current_dir = os.getcwd()
 
 #C1, C2
