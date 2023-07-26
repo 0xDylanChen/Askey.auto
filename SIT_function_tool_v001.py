@@ -28,10 +28,6 @@ import threading
 import datetime
 import time 
 
-#Function test C3
-#import functionTest_com as function
-#import serial.tools.list_ports
-
 # 取得當前目錄
 current_dir = os.getcwd()
 
