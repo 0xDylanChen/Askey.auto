@@ -1,0 +1,136 @@
+; 變數 i，初始值為 1
+i = 1
+
+; 執行迴圈，以變數 i 來控制
+do while i<=1000
+    
+    ; 啟動後讀到開機程序字串
+    wait 'HW_VER=EV1'
+    ; 等待40秒
+    pause 40
+    
+    ; 換行
+    sendln ''
+    ; 等待畫面出現 login 字串
+    wait 'ctx0800-c0 login:'
+    
+    ; 輸入帳號 - "id"
+    sendln 'tcuadmin'
+    pause 2
+    
+    ; 輸入密碼 - "password"
+    sendln 'Askey+1937'
+    pause 2
+    
+    ; root
+    sendln 'sudo su'
+    pause 2
+    
+    ; 輸入密碼 - "password"
+    sendln 'Askey+1937'
+    pause 2
+    
+    ; 查看hsmkeyinstall.service
+    sendln ''
+    sendln 'systemctl status hsmkeyinstall.service -l --no-page'
+    pause 1
+    
+    ; 切換到/usr/bin/sxf1800
+    sendln ''
+    sendln 'cd /usr/bin/sxf1800'
+    pause 1
+    
+    ; sxf1800 - Get data
+    sendln ''
+    sendln 'echo -ne "1\n3\n34\n0\n34\n1\n0\n" | ./v2xse-example-app'
+    ; 等待畫面出現HSM data
+    wait 'Data: C2 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 2D 2D 2D 2D 2D 42 45 47 49 4E 20 50 55 42 4C 49 43 20 4B 45 59 2D 2D 2D 2D 2D 0A 4D 49 49 42 49 6A 41 4E 42 67 6B 71 68 6B 69 47 39 77 30 42 41 51 45 46 41 41 4F 43 41 51 38 41 4D 49 49 42 43 67 4B 43 41 51 45 41 6E 58 39 6C 44 36 43 33 56 6B 34 41 5A 33 72 50 5A 63 66 33 0A 51 34 2F 59 6B 6D 64 47 41 38 7A 33 52 4D 2F 6C 66 36 5A 33 6F 6D 37 69 76 4D 4A 66 5A 31 54 33 4E 78 73 34 55 6C 4F 52 4A 77 76 50 70 46 30 7A 69 67 4A 51 45 68 78 6E 66 73 48 58 49 7A 49 55 0A 30 78 49 4D 50 45 63 43 53 53 4E 33 68 36 48 34 6F 76 51 45 4A 6F 48 51 59 70 4A 53 30 56 66 77 70 73 48 51 66 75 41 41 68 56 49 72 75 51 4E 51 6C 4E 48 46 53 6B 2F 2F 47 54 77 59 39 73 32 37 0A 59 INFO: Get data, Result: Success'
+    wait 'Data: 34 77 70 75 44 4C 65 33 33 31 75 53 67 37 31 49 58 42 6D 50 4E 61 63 76 6E 37 77 78 6A 61 78 2F 65 65 71 44 71 38 63 76 64 34 55 30 46 36 53 4E 32 53 6E 66 5A 79 7A 43 37 68 78 64 6F 4E 4B 0A 4A 55 42 50 4D 42 38 7A 73 75 61 79 45 66 6C 67 65 78 36 72 75 75 6C 62 55 76 48 31 5A 63 2B 54 36 76 34 6D 63 35 74 68 31 36 74 39 52 73 47 43 4C 66 39 50 31 6E 56 4A 35 58 74 35 31 6C 44 6C 0A 2B 2B 66 4A 45 4B 45 71 6D 53 53 30 72 61 53 31 57 71 65 4A 53 64 4B 65 53 72 35 35 38 56 5A 58 49 31 46 74 56 46 63 6B 7A 37 6D 5A 2F 75 6A 50 5A 31 41 51 4B 4D 72 51 53 35 30 39 54 6F 4A 69 0A 34 77 49 44 41 51 41 42 0A 2D 2D 2D 2D 2D 45 4E 44 20 50 55 42 4C 49 43 20 4B 45 59 2D 2D 2D 2D 2D INFO: Get data, Result: Success'
+    pause 1
+    
+    ; 顯示另一個小視窗，內容為 i 的值
+    statusbox i 'FOTA counter '
+    
+    ; 打印Round
+    RoundMsg='echo "===== Round '
+    RoundCount=''
+    int2str RoundCount i
+    strconcat RoundMsg RoundCount
+    strconcat RoundMsg ' ====="'
+    sendln ''
+    sendln RoundMsg
+    pause 1
+    
+    ; 查看軟體版本
+    sendln ''
+    sendln 'cat /proc/sw_version'
+    pause 1
+    
+    ; 查看FwUpdate設定
+    sendln ''
+    sendln 'cat /run/media/mmcblk0p4/conf/ctx0800.conf | grep -A 3 "FwUpdate settings"'
+    pause 1
+    
+    ; 查看USB檔案
+    sendln ''
+    sendln 'ls -al /run/media/mmcblk0p4/usb/'
+    pause 1
+    
+    ; 查看updatelist設定
+    sendln ''
+    sendln 'cat /run/media/mmcblk0p4/usb/updatelist'
+    pause 1
+    
+    ; 複製USB檔案到/dev/shm/
+    sendln ''
+    sendln 'cp /run/media/mmcblk0p4/usb/* /dev/shm/'
+    pause 3
+    
+    ; 同步資料
+    sendln ''
+    sendln 'sync'
+    pause 3
+    
+    ; 查看/dev/shm/檔案
+    sendln ''
+    sendln 'ls -al /dev/shm/'
+    pause 1
+    
+    ; 建立/run/media/sda1連結到/dev/shm
+    sendln ''
+    sendln 'ln -s /dev/shm /run/media/sda1'
+    pause 1
+    
+    ; 同步資料
+    sendln ''
+    sendln 'sync'
+    pause 1
+    
+    ; 查看/run/media/sda1檔案
+    sendln ''
+    sendln 'ls -al /run/media/sda1'
+    pause 1
+    
+    ; 檢查runlog.txt
+    sendln ''
+    sendln 'tail -f /run/media/mmcblk0p4/runlog.txt | grep FWUpdateM &'
+    pause 1
+    
+    ; 建立/dev/sda1檔案
+    sendln ''
+    sendln 'touch /dev/sda1'
+    pause 1
+    
+    ; 同步資料
+    sendln ''
+    sendln 'sync'
+    pause 1
+    
+    ; 查看/dev/sda1檔案
+    sendln ''
+    sendln 'ls -al /dev/sda1'
+    pause 1
+    
+    ; 增加變數 i 的值
+    i=i+1
+loop

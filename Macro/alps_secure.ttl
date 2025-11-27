@@ -1,0 +1,113 @@
+; 變數 i，初始值為 1
+i = 1
+
+; 執行迴圈，以變數 i 來控制
+do while i<=1000
+	; 等待畫面出現 login 字串
+	sendln ''
+	
+	; 等待畫面出現 login 字串
+	wait 'ctx0800-c0 login:'
+	
+	; 顯示另一個小視窗，內容為 i 的值
+	statusbox i 'CV2X issue 聚集'
+	
+	; 輸入帳號 - "id"
+	sendln 'root'
+	
+	; 等待 1 秒
+	pause 1
+	
+	; 輸入密碼 - "password"
+	sendln 'Askey+1937'
+	
+	; 等待 2 秒
+	pause 5
+	
+	;
+	sendln 'systemctl start sshd.socket'
+	sendln 'rm -r /run/media/mmcblk0p4/alps'
+	pause 1
+
+	sendln 'cd /run/media/mmcblk0p4/'
+	pause 1
+
+	sendln 'mkdir alps'
+	pause 1
+
+	sendln 'cd alps'
+	pause 1
+	sendln 'cp -n -r /run/media/sda1/alps_secure/fh_loader_tool_20220520.zip /run/media/mmcblk0p4/alps/'
+	pause 3
+	sendln 'cp -n -r /run/media/sda1/alps_secure/SA515M_LE21_SA_R170_1_A003.zip /run/media/mmcblk0p4/alps/'
+	pause 3
+	sendln 'cp -n -r /run/media/sda1/alps_secure/UMNZ1_Askey_20220407_sec.elf /run/media/mmcblk0p4/alps/'
+	pause 3
+	sendln 'ls -l'
+	pause 3
+	sendln 'unzip fh_loader_tool_20220520.zip'
+	pause 20
+	sendln 'chmod +x fh_loader_tool_20220520/*'
+	pause 1
+	sendln 'unzip SA515M_LE21_SA_R170_1_A003.zip'
+	pause 20
+	sendln 'cd VB_LE21_SA_R170_1_A003/Alap_Image/NAND/FIREHOSE/'
+	pause 1
+	sendln 'cp ../../../../fh_loader_tool_20220520/* .'
+	pause 1
+	sendln 'systemctl stop tcu_app'
+	pause 1
+	sendln 'killall tcu_main'
+	pause 3
+	sendln 'adb reboot edl'
+	pause 10
+	sendln 'lsusb'
+	sendln './QSaharaServer -p /dev/ks_usb_bridge.0 -s 13:prog_firehose_sdx55.mbn'
+	pause 5
+	sendln './fh_loader --port=/dev/ks_usb_bridge.0 --sendxml=rawprogram_nand_p4K_b256K.xml,patch_p4K_b256K.xml --search_path=./ --memoryname=nand --zlpawarehost=1 --noprompt'
+	pause 200
+	wait 'Writing log, might take a minute'
+	pause 5
+	sendln 'cp port_trace.txt ~/.'
+	sendln 'ls -l port_trace.txt'	
+	sendln 'sync'
+	sendln 'echo "斷電重啟DUT"'
+	pause 3
+	; 增加變數 i 的值
+	i=i+1
+loop
+
+
+
+
+
+
+
+
+
+
+
+sleep 10
+
+
+sleep 10
+
+sleep 10
+
+
+
+sleep 1 
+
+
+
+
+
+
+
+sleep 10
+
+sleep 10
+sleep 10
+
+
+

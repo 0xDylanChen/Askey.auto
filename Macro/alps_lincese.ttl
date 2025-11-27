@@ -1,0 +1,59 @@
+; 變數 i，初始值為 1
+i = 1
+
+; 執行迴圈，以變數 i 來控制
+
+; 等待畫面出現 login 字串
+sendln ''
+	
+; 等待畫面出現 login 字串
+wait 'ctx0800-c0 login:'
+
+; 顯示另一個小視窗，內容為 i 的值
+statusbox i 'CV2X issue 聚集'
+	
+; 輸入帳號 - "id"
+sendln 'root'
+	
+; 等待 1 秒
+pause 1
+	
+; 輸入密碼 - "password"
+sendln 'Askey+1937'
+
+sendln 'rm -r /run/media/mmcblk0p4/alps/*'
+; 等待 2 秒
+pause 2
+sendln 'cd /run/media/mmcblk0p4/'
+pause 1
+
+sendln 'mkdir alps'
+pause 1
+sendln 'cd alps'
+pause 1
+sendln 'cp -n -r /run/media/sda1/alps_secure/UMNZ1_Askey_20220407_sec.elf /run/media/mmcblk0p4/alps/'
+pause 3
+sendln 'ls -l'
+
+sendln 'cd /run/media/mmcblk0p4/alps/'
+
+sendln 'ls -l'
+pause 1
+
+sendln 'systemctl stop tcu_app'
+pause 1
+
+sendln 'killall tcu_main'
+pause 1
+
+sendln 'adb reboot bootloader'
+pause 5
+sendln 'lsusb'
+pause 1
+sendln 'fastboot flash sec UMNZ1_Askey_20220407_sec.elf'
+pause 10
+sendln 'fastboot reboot'
+pause 10
+sendln 'rm -r /run/media/mmcblk0p4/alps/*'
+sendln 'Finish'
+; 增加變數 i 的值

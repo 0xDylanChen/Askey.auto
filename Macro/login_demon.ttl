@@ -1,0 +1,72 @@
+; 變數 i，初始值為 1
+i = 1
+
+; 執行迴圈，以變數 i 來控制
+do while i<=1000
+	
+	; 等待畫面出現 login 字串
+	wait 'mdm9607 login:'
+		
+	; 
+	sendln 'root'
+	
+	; 
+	pause 1
+	
+	; 
+	sendln 'oelinux123'
+	
+	; 
+	pause 1
+		
+	; 
+	sendln 'echo "TEST_MCU exec_mcu_cmd=2" > /usrdata/askey/sfifo'
+	
+	;
+	pause 1
+		
+	sendln 'echo "TEST_MCU TEST_RS485" > /usrdata/askey/sfifo'
+	
+	pause 1
+	
+	sendln 'ping 8.8.8.8 &'
+	pause 1
+	
+	sendln 'cat /dev/smd7'
+	
+loop
+
+
+
+
+
+
+
+
+
+
+
+sleep 10
+
+
+sleep 10
+
+sleep 10
+
+
+
+sleep 1 
+
+
+
+
+
+
+
+sleep 10
+
+sleep 10
+sleep 10
+
+
+

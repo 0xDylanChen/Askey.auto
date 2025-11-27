@@ -1,0 +1,52 @@
+; 變數 i，初始值為 1
+i = 1
+
+; 執行迴圈，以變數 i 來控制
+do while i<=1000
+	; 等待畫面出現 login 字串
+	sendln ''
+	
+	; 等待畫面出現 login 字串
+	wait 'ctx0800-c0 login:'
+	
+	; 顯示另一個小視窗，內容為 i 的值
+	statusbox i 'Watchdoge'
+	
+	; 輸入帳號 - "id"
+	sendln 'root'
+	
+	; 等待 1 秒
+	pause 1
+	
+	; 輸入密碼 - "password"
+	sendln 'Askey+1937'
+	
+	; 等待 2 秒
+	pause 30
+	
+	;C1796725 
+	sendln 'echo "TEST_SetLogModuleLevel MCUM info" >/opt/sfifo'
+	sendln 'tail -f /run/media/mmcblk0p4/runlog.txt &'
+	;start
+	sendln 'echo "TEST_MCU_WATCHDOG disable" > /opt/sfifo'
+	wait 'TEST_MCU_WATCHDOG disable'
+
+	sendln 'echo "TEST_MCU_WATCHDOG enable" > /opt/sfifo'
+	wait 'TEST_MCU_WATCHDOG enable'
+'	
+	sendln 'echo "TEST_SOC_WATCHDOG disable" > /opt/sfifo'
+	wait 'TEST_SOC_WATCHDOG disable'
+	
+	sendln 'echo "TEST_MCU_WATCHDOG enable" > /opt/sfifo'
+	wait 'TEST_SOC_WATCHDOG enable'
+	
+	
+	;
+	sendln '/run/media/sda1/./alps_test.sh'
+	pause 3
+	
+	; 增加變數 i 的值
+	i=i+1
+loop
+
+
